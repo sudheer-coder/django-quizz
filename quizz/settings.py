@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = ')jbtb$u5kql0y)7^q&=$lk#gvem9_5x5!#$1f6xo)3_tba=a9s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['djang-quizz.herokuapp.com','127.0.0.1']
 
