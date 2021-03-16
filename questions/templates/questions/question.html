@@ -1,0 +1,96 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Quiz Application</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+	<script src = "{% static 'js/quiz.js' %}"></script>
+</head>
+<body>
+	<div id = "container">
+		<header>
+			<h1>Objective test Question</h1>
+		</header>
+
+		<section>
+			<div id = "results"></div>
+			<form id = "quizForm" action="" >
+				{% csrf_token %}
+
+				<h3> {{ question.id }}.  {{ question.question }}</h3>
+
+				<br/>
+				<input type = "radio" onchange="changeValue()" name="question" value='{{ question.option1 }}' id ="ans">   a. {{ question.option1 }}<br><br>
+				<input type = "radio" onchange="changeValue()" name="question" value='{{ question.option2 }}' id ="ans1">   b. {{ question.option2 }}<br><br>
+				<input type = "radio" onchange="changeValue()" name="question" value='{{ question.option3 }}' id ="ans2">   c. {{ question.option3 }}<br><br>
+				<input type = "radio" onchange="changeValue()" name="question" value='{{ question.option4 }}' id ="ans3">   d. {{ question.option4 }}<br><br>
+
+				<br><br>
+
+				<input disabled="true" onclick="handleSubmit('{{ question.answer }}','{{ question.id }}')" ref="submit" id="submit" type="submit" name="submit" value="submit value">
+				<p style="color: red; font-size: 10px;" id="answer"></p>
+
+
+
+			</form>
+            {% if question.id <= 9 %}
+                <form id="nextForm" action="{% url 'questions:questions' question.id %}">
+                    <input disabled="true" id="next" type="submit" value="Next">
+                </form>
+            {% else %}
+                <form id="finishForm" action="{% url 'questions:finishquizz' %}">
+                    <input type="submit" value="Finish">
+                </form>
+            {% endif %}
+			<br><br>
+
+		</section>
+
+	</div>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+	<script>
+		function changeValue() {
+			document.getElementById('submit').disabled = false
+		}
+		async function handleSubmit(ans,qid) {
+			var id = qid
+			const rbs = document.querySelectorAll('input[name="question"]')
+			let selectedValue;
+			for (const rb of rbs) {
+				if (rb.checked) {
+					selectedValue = rb.value;
+					break;
+				}
+		 	}
+		 	if(selectedValue == null) {
+		 		document.getElementById("answer").innerHTML = "Please select any value"
+		 		return false
+		 	} else {
+		 		for(var i of rbs) {
+					i.disabled = true
+				}
+				if(selectedValue == ans) document.getElementById("answer").innerHTML = "Correct Answer"
+				else document.getElementById("answer").innerHTML = "Wrong Answer"
+				document.getElementById('submit').disabled = true
+				document.getElementById('next').disabled = false
+				setTimeout(function(){ document.getElementById("answer").innerHTML = "" }, 3000);
+				$.ajax({
+					type:'POST',
+					url:'/test/check/',
+					data:{
+						name:selectedValue,
+						qid:id,
+						csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+					}
+
+				});
+
+		 	}
+		}
+
+	</script>
+
+</body>
+</html>

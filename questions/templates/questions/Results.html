@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <script src = "{% static 'js/quiz.js' %}"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+      <div class="login">
+        <h1>Results</h1>
+      </br>
+          <h2>Scores: {{context.scores}} </h2>
+          </br>
+          <h2>correct:  {{context.correct}}</h2>
+          </br>
+          <h2>incorrect:  {{context.incorrect}}</h2>
+          </br>
+          <h2>time duration:  {{context.status}}</h2>
+          </br>
+          <h2>time duration:  {{context.duration}}</h2>
+
+      </div>
+    </div>
+</body>
+</html>
+

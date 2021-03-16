@@ -1,0 +1,27 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="login">
+     <form action="{% url 'login:start' %}" >
+         <p>1)You will have 10 questions to complete </p>
+         <p>2)each question carries 10 marks </p>
+         <p>3)Dont use phone</p>
+         <p>4)click on start button to start quizz</p>
+     </br>
+
+        <input type="submit" name="commit" value="start"></p>
+
+    </form>
+    </div>
+</div>
+
+</body>
+</html>
